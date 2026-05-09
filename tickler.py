@@ -40,6 +40,15 @@ def download_sheet(sheet_id, service_account_file):
     return pd.DataFrame(sh.sheet1.get_all_records())
 
 
+def read_local_csv(path):
+    """ Read tickler rows from a local CSV file. Returns a DataFrame.
+        >>> df = read_local_csv("tests/tickler.csv")
+        >>> list(df["event"])[0]
+        'FBI UCR'
+        """
+    return pd.read_csv(path)
+
+
 def expand_quarterly_rows(df, today):
     """ Expand is_quarterly rows into concrete dated rows for nearby years.
         The check-on value is like 'XXXX-02-07': 7th day of the 2nd month of
@@ -202,15 +211,19 @@ def main(args):
         format="%(asctime)s %(levelname)s: %(message)s"
     )
 
-    sheet_id = args.sheet_id or os.environ["SHEET_ID"]
-    service_account_file = args.service_account_file or os.environ["SERVICE_ACCOUNT_FILE"]
     gmail_user = os.environ["GMAIL_USER"]
     app_password = os.environ["GMAIL_APP_PASSWORD"]
     email_to = os.environ.get("EMAIL_TO", gmail_user)
 
-    logging.debug(f"Downloading sheet {sheet_id}")
-    df = download_sheet(sheet_id, service_account_file)
-    logging.debug(f"Downloaded {len(df)} rows")
+    if args.csv:
+        logging.debug(f"Reading local CSV {args.csv}")
+        df = read_local_csv(args.csv)
+    else:
+        sheet_id = args.sheet_id or os.environ["SHEET_ID"]
+        service_account_file = args.service_account_file or os.environ["SERVICE_ACCOUNT_FILE"]
+        logging.debug(f"Downloading sheet {sheet_id}")
+        df = download_sheet(sheet_id, service_account_file)
+    logging.debug(f"Loaded {len(df)} rows")
 
     past, upcoming = process_dates(df)
     logging.info(f"{len(past)} past-week rows, {len(upcoming)} upcoming rows")
@@ -235,6 +248,9 @@ def build_parser(args):
         >>> args = build_parser(['--dry-run'])
         >>> print(args.dry_run)
         True
+        >>> args = build_parser(['--csv', 'tests/tickler.csv'])
+        >>> print(args.csv)
+        tests/tickler.csv
         """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("-v", "--verbose", dest="verbose", default=False, action="store_true")
@@ -242,6 +258,7 @@ def build_parser(args):
     parser.add_argument("--dry-run", dest="dry_run", default=False, action="store_true", help="Print the email instead of sending it.")
     parser.add_argument("--sheet-id", dest="sheet_id", default=None, help="Override SHEET_ID env var.")
     parser.add_argument("--service-account-file", dest="service_account_file", default=None, help="Override SERVICE_ACCOUNT_FILE env var.")
+    parser.add_argument("--csv", dest="csv", default=None, metavar="FILE", help="Read tickler data from a local CSV instead of Google Sheets.")
     args = parser.parse_args(args)
     return args
 
