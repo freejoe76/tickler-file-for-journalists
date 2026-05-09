@@ -5,7 +5,7 @@ This script will email you a weekly rundown of recently past and upcoming entrie
 
 If you don't have a tickler file, [this short post will get you started](https://joemurph.com/article/detail/tickler-files-for-journalists/).
 
-This assumes you are hosting the spreadsheet that acts as your tickler file on Google Sheets. TODO: Allow arbitrary CSV endpoint for tickler file.
+Your tickler file can be a Google Sheet or a local CSV.
 
 Note that parts of this README and parts of the tickler.py code were written with AI. All code has and will be tested by a human before release.
 
@@ -93,5 +93,15 @@ Override sheet or credentials without editing `.env`:
 ```bash
 python tickler.py --sheet-id YOUR_ID --service-account-file /path/to/creds.json --dry-run
 ```
+
+### Using a local CSV
+
+Pass `--csv` to read from a local file instead of Google Sheets. The `SHEET_ID` and `SERVICE_ACCOUNT_FILE` env vars are not required in this mode.
+
+```bash
+python tickler.py --csv /path/to/tickler.csv --dry-run
+```
+
+Your CSV should have at minimum an `event` column and a `check-on` column (dates in `YYYY-MM-DD` format). Optional columns: `notes`, `related-url`, `is_quarterly`.
 
 Logs from the scheduled run are written to `tickler.log`.
