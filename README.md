@@ -3,13 +3,11 @@ A second brain for reminding you of dates important to you.
 
 This script will email you a weekly rundown of recently past and upcoming entries in your tickler file.
 
-This is what the email will probably look like:
-![Sample tickler summary email](tickler-summary.png)
-
 If you don't have a tickler file, [this short post will get you started](https://joemurph.com/article/detail/tickler-files-for-journalists/).
 
 Your tickler file can be a Google Sheet or a local CSV.
 
+![Sample tickler summary email](tickler-summary.png)
 
 Note that parts of this README and parts of the tickler.py code were written with AI. All code has and will be tested by a human before release.
 
@@ -30,10 +28,7 @@ This is only necessary if your tickler file is a private Google Sheet.
 2. Go to **APIs & Services → Credentials → Create Credentials → Service account**. Download the JSON key and save it locally (e.g. `service_account.json`).
 3. Share your Google Sheet with the service account's email address (Viewer access is enough).
 
-### 1b. If you don't use Google Sheets, yo'll need a tickler.csv (look for an examples in the tests/ directory)
-
 ### 2. Gmail app password
-This is for sending emails.
 
 In your Google Account, go to **[Security](https://myaccount.google.com/security) → 2-Step Verification → [App passwords](https://myaccount.google.com/apppasswords)** and generate a password for this script.
 
@@ -63,10 +58,62 @@ pip install -r requirements.txt
 
 ### 5. Schedule
 
-TODO: Show options for platforms and sophistications.
+Pick the method for your platform. All examples run the script every Monday at 7:00 AM.
+
+#### macOS (launchd)
+
+Create `~/Library/LaunchAgents/com.tickler.plist`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.tickler</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/path/to/tickler-file/.venv/bin/python</string>
+        <string>/path/to/tickler-file/tickler.py</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/path/to/tickler-file</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>1</integer>
+        <key>Hour</key>
+        <integer>7</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/path/to/tickler-file/tickler.log</string>
+    <key>StandardErrorPath</key>
+    <string>/path/to/tickler-file/tickler.log</string>
+</dict>
+</plist>
+```
+
+Then load it:
 
 ```bash
 launchctl load ~/Library/LaunchAgents/com.tickler.plist
+```
+
+#### Linux (cron)
+This approach also works on Macintosh.
+
+Run `crontab -e` and add:
+
+```
+0 7 * * 1 cd /path/to/tickler-file && .venv/bin/python tickler.py >> tickler.log 2>&1
+```
+
+#### Windows (Task Scheduler)
+
+```bat
+schtasks /create /tn "Tickler" /tr "C:\path\to\tickler-file\.venv\Scripts\python.exe C:\path\to\tickler-file\tickler.py" /sc weekly /d MON /st 07:00
 ```
 
 ## Usage
