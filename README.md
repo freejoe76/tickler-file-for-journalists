@@ -30,7 +30,10 @@ This is only necessary if your tickler file is a private Google Sheet.
 2. Go to **APIs & Services → Credentials → Create Credentials → Service account**. Download the JSON key and save it locally (e.g. `service_account.json`).
 3. Share your Google Sheet with the service account's email address (Viewer access is enough).
 
+### 1b. If you don't use Google Sheets, yo'll need a tickler.csv (look for an examples in the tests/ directory)
+
 ### 2. Gmail app password
+This is for sending emails.
 
 In your Google Account, go to **[Security](https://myaccount.google.com/security) → 2-Step Verification → [App passwords](https://myaccount.google.com/apppasswords)** and generate a password for this script.
 
