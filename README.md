@@ -3,9 +3,13 @@ A second brain for reminding you of dates important to you.
 
 This script will email you a weekly rundown of recently past and upcoming entries in your tickler file.
 
+This is what the email will probably look like:
+![Sample tickler summary email](tickler-summary.png)
+
 If you don't have a tickler file, [this short post will get you started](https://joemurph.com/article/detail/tickler-files-for-journalists/).
 
 Your tickler file can be a Google Sheet or a local CSV.
+
 
 Note that parts of this README and parts of the tickler.py code were written with AI. All code has and will be tested by a human before release.
 
