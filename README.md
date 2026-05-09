@@ -9,6 +9,12 @@ This assumes you are hosting the spreadsheet that acts as your tickler file on G
 
 Note that parts of this README and parts of the tickler.py code were written with AI.
 
+## What you'll need
+
+1. A tickler sheet, in Google Sheets.
+2. A Google account.
+3. A way to run computer jobs on a schedule.
+
 ## Setup
 
 The hard stuff:
@@ -21,7 +27,7 @@ The hard stuff:
 
 ### 2. Gmail app password
 
-In your Google Account, go to **Security → 2-Step Verification → App passwords** and generate a password for this script.
+In your Google Account, go to **[Security](https://myaccount.google.com/security) → 2-Step Verification → [App passwords](https://myaccount.google.com/apppasswords)** and generate a password for this script.
 
 ### 3. Config
 
@@ -49,8 +55,10 @@ pip install -r requirements.txt
 
 ### 5. Schedule
 
+TODO: Show options for platforms and sophistications.
+
 ```bash
-launchctl load ~/Library/LaunchAgents/com.joemurphy.tickler.plist
+launchctl load ~/Library/LaunchAgents/com.tickler.plist
 ```
 
 ## Usage
