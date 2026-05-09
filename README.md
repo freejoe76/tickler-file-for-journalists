@@ -7,19 +7,20 @@ If you don't have a tickler file, [this short post will get you started](https:/
 
 This assumes you are hosting the spreadsheet that acts as your tickler file on Google Sheets. TODO: Allow arbitrary CSV endpoint for tickler file.
 
-Note that parts of this README and parts of the tickler.py code were written with AI.
+Note that parts of this README and parts of the tickler.py code were written with AI. All code has and will be tested by a human before release.
 
 ## What you'll need
 
-1. A tickler sheet, in Google Sheets.
-2. A Google account.
+1. A tickler sheet, in Google Sheets. OPTIONAL. You can use a local CSV instead.
+2. A Google account (for sending emails to yourself).
 3. A way to run computer jobs on a schedule.
 
 ## Setup
 
 The hard stuff:
 
-### 1. Google Sheets API
+### 1. Google Sheets API (OPTIONAL)
+This is only necessary if your tickler file is a private Google Sheet.
 
 1. In [Google Cloud Console](https://console.cloud.google.com), enable the **Google Sheets API** for your project.
 2. Go to **APIs & Services → Credentials → Create Credentials → Service account**. Download the JSON key and save it locally (e.g. `service_account.json`).
