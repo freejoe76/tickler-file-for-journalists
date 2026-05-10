@@ -5,9 +5,11 @@ Weekly tickler file digest — emails a summary of recent and upcoming dates fro
 Reads a private Google Sheet via a service account, buckets rows by "Check on date"
 into the past 7 days and the next 60 days, then emails the summary via Gmail SMTP.
 
-Required env vars (or a .env file):
+Optional env vars (only needed if managing the tickler file from a Google Sheet)
   SHEET_ID              Google Sheet ID (from the URL)
   SERVICE_ACCOUNT_FILE  Path to the service account JSON credentials
+
+Required env vars (or a .env file):
   GMAIL_USER            Sending Gmail address
   GMAIL_APP_PASSWORD    Gmail app password (not your account password)
   EMAIL_TO              Recipient address (defaults to GMAIL_USER)
