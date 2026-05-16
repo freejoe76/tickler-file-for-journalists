@@ -9,7 +9,7 @@ Your tickler file can be a Google Sheet or a local CSV.
 
 ![Sample tickler summary email](tickler-summary.png)
 
-Note that parts of this README and parts of the tickler.py code were written with AI. All code has and will be tested by a human before release.
+Note that parts of this README and parts of the tickler.py code were written with AI. All code, except the Windows-specific code, has been tested by a human.
 
 ## What you'll need
 
@@ -43,8 +43,8 @@ Fill in `.env`:
 
 | Variable | Description |
 |---|---|
-| `SHEET_ID` | The long ID from your sheet's URL |
-| `SERVICE_ACCOUNT_FILE` | Absolute path to the service account JSON |
+| `SHEET_ID` | The long ID from your sheet's URL (optional) |
+| `SERVICE_ACCOUNT_FILE` | Absolute path to the service account JSON (optional) |
 | `GMAIL_USER` | Your Gmail address |
 | `GMAIL_APP_PASSWORD` | The app password from step 2 |
 | `EMAIL_TO` | Recipient address (defaults to `GMAIL_USER`) |
