@@ -1,11 +1,11 @@
-# Tickler File Manager
+# Tickler file manager
 A second brain for reminding you of dates important to you.
 
 This script will email you a weekly rundown of recently past and upcoming entries in your tickler file.
 
 If you don't have a tickler file, [this short post will get you started](https://joemurph.com/article/detail/tickler-files-for-journalists/).
 
-Your tickler file can be a Google Sheet or a local CSV.
+Your tickler file can be a Google Sheet or a local CSV. I recommend getting a local CSV working first and then moving on to a Google Sheet, if desired.
 
 ![Sample tickler summary email](tickler-summary.png)
 
@@ -21,12 +21,15 @@ Note that parts of this README and parts of the tickler.py code were written wit
 
 The hard stuff:
 
-### 1. Google Sheets API (OPTIONAL)
+### 1a. Google Sheets API (OPTIONAL)
 This is only necessary if your tickler file is a private Google Sheet.
 
 1. In [Google Cloud Console](https://console.cloud.google.com), enable the **Google Sheets API** for your project.
 2. Go to **APIs & Services → Credentials → Create Credentials → Service account**. Download the JSON key and save it locally (e.g. `service_account.json`).
 3. Share your Google Sheet with the service account's email address (Viewer access is enough).
+
+### 1b. Local CSV
+Your CSV should have at minimum an `event` column and a `check-on` column (dates in `YYYY-MM-DD` format). Optional columns: `notes`, `related-url`, `is_quarterly`.
 
 ### 2. Gmail app password
 
