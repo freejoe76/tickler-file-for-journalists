@@ -1,4 +1,4 @@
-# Tickler file manager
+# Joe's tickler file manager
 A second brain for reminding you of dates important to you.
 
 This script will email you a weekly rundown of recently past and upcoming entries in your tickler file.
